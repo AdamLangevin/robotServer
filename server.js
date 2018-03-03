@@ -5,12 +5,12 @@ var path        = require('path');
 
 var mainRoutes  = require('./routes/index');
 
-var app         = express();
+var applet         = express();
 var port        = 8080;
 
-app.use('/', mainRoutes);
+applet.use('/', mainRoutes);
 
-app.listen(port, function(err){
+applet.listen(port, function(err){
   if(err){
     return console.log('Error ', err);
   }
@@ -18,4 +18,4 @@ app.listen(port, function(err){
   console.log('Server is listening on ' +port);
 });
 
-module.exports = app;
+module.exports = applet;
