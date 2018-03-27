@@ -1,0 +1,10 @@
+open sftp://pi:fubar@192.168.0.122/ -hostkey="ssh-ed25519 256 BCdGBjgQ5oZG1f7jl8twHl/CnpyH6gG9rc7GztKzyXA=" -rawsettings ProxyPort=0
+
+# Your command 1
+# Your command 2
+synchronize local [c:\users\py120\Desktop\Dev\robotServer\public\uploads [/home/pi/Desktop/uploads]]
+
+exit
+
+# Execute the script using a command like:
+# "C:\Program Files (x86)\WinSCP\WinSCP.exe" /log="C:\writable\path\to\log\WinSCP.log" /ini=nul /script="C:\path\to\script\script.txt"

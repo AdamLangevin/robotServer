@@ -1,62 +1,50 @@
-require('dotenv').load();
+//require('dotenv').load();
 
 var express     = require('express');
-var path        = require('path');
-var multer      = require('multer');
-var bodyparser  = require('body-parser');
-
-var mainRoutes  = require('./routes/index');
-
 var applet      = express();
-var port        = 8080;
+var path        = require('path');
+var bodyparser  = require('body-parser');
+var seo         = require('express-seo');
+var session     = require('express-session');
+var client      = require('scp2');
+var fs          = require('fs');
 
-applet.use(bodyparser.json());
-applet.use(bodyparser.urlencoded({ extended: true }));
+const { exec }   = require('child_process');
 
-var stor = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, './uploads');
-  },
-  filename: (req, file, callback) => {
-    console.log(file);
-    callback(null, file.originalname);
-  }
-});
+var prog  = 'C:\\Users\\py120\\Desktop\\Dev\\objectDetection\\CannyDetection\\CannyDetection\\bin\\Debug\\CannyDetection.exe'
 
-var upload = multer({
-  storage: stor
-}).single('image');
-
-applet.post('/upload', (req, res) => {
-  upload(req,res, (err) => {
-    if(err){
-      console.log('Upload Error', err);
-      return;
-    }
-    console.log(req.file);
-    res.end('File Uploaded');
-    const { exec }   = require('child_process');
-
-    var prog  = '..\\objectDetection\\CannyDetection\\CannyDetection\\bin\\Debug\\CannyDetection.exe'
-
-    exec(prog, (err, stdout, stderr) => {
-       if(err){
-         console.error(err);
-         return;
-       }
-       console.log(stdout);
-     });
-  })
-});
-
-applet.use('/', mainRoutes);
-
-applet.listen(port, function(err){
+exec(prog, (err, stdout, code) => {
   if(err){
-    return console.log('Error ', err);
+    console.error(err);
+    return;
   }
+  console.log(stdout);
+});
+/**
+  async () => {
+    await sleep(10000);
+    var opts = {
+      username: 'pi',
+      host: '192.168.0.122',
+      port: '22',
+      password: 'fubar',
+      path: '~/home/pi/Desktop/uploads'
+    };
+    var file = 'C:\\Users\\py120\\Desktop\\Dev\\robotServer\\public\\uploads\\distances.txt';
 
-  console.log('Server is listening on ' +port);
+    client.scp(opts, file, (err) => {
+      if(err) {
+        console.log('Error returning distances: ', err);
+        return;
+      }
+      console.log('Transfered response');
+    });
+  };
 });
 
-module.exports = applet;
+function sleep(ms){
+  return new Promise(res => {
+    setTimeout(res,ms);
+  });
+};
+**/
